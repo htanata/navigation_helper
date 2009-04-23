@@ -44,7 +44,9 @@ module RPH
         navigation, items = Navigator.new(sections, options), []
 
         navigation.sections.each do |link|
-          css = 'current' if link == controller.class.current_tab
+          if link == controller.class.current_tab || ROUTES[link.to_sym] == request.path
+            css = 'current'
+          end
           
           if navigation.methods_to_authorize.include?(link)
             items << content_tag(:li, construct(navigation, link), :class => [css.to_s, navigation.authorized_css.to_s].compact.join(' ')) if allowed?(navigation)
