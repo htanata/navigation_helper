@@ -44,7 +44,8 @@ module RPH
         navigation, items = Navigator.new(sections, options), []
 
         navigation.sections.each do |link|
-          if link == controller.class.current_tab || ROUTES[link.to_sym] == request.path
+          if ROUTES[link.to_sym] == request.path ||
+              (!ROUTES.has_value?(request.path) && link == controller.class.current_tab)
             css = 'current'
           end
           
